@@ -24,4 +24,4 @@ To use this application, follow these steps:
     ```bash
     streamlit run app.py
 
-Developed by (Anish Mahapatra)[https://www.linkedin.com/in/anishmahapatra/]
+Developed by [Anish Mahapatra](https://www.linkedin.com/in/anishmahapatra/)
