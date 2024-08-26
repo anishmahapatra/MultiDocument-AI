@@ -28,12 +28,12 @@ def get_text_chunks(text):
     return chunks
 
 def get_vectorstore(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain(vectorstore):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model_name='gpt-3.5-turbo')
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=vectorstore.as_retriever(), memory=memory)
     return conversation_chain
@@ -46,12 +46,12 @@ def get_text_chunks_from_docx(docx_file):
     return get_text_chunks(text)
 
 def get_vectorstore_from_docx(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain_for_docx(vectorstore):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model_name='gpt-3.5-turbo')
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=vectorstore.as_retriever(), memory=memory)
     return conversation_chain
@@ -66,12 +66,12 @@ def get_text_chunks_from_ppt(ppt_file):
     return get_text_chunks(text)
 
 def get_vectorstore_from_ppt(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain_for_ppt(vectorstore):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model_name='gpt-3.5-turbo')
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=vectorstore.as_retriever(), memory=memory)
     return conversation_chain
@@ -84,12 +84,12 @@ def get_text_chunks_from_excel(excel_file):
     return get_text_chunks(text)
 
 def get_vectorstore_from_excel(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain_for_excel(vectorstore):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model_name='gpt-3.5-turbo')
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=vectorstore.as_retriever(), memory=memory)
     return conversation_chain
