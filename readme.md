@@ -1,29 +1,90 @@
-# AI Chat with Documents 📚
+# MultiDocument AI
 
-## Project Overview
-**AI Chat with Documents** is a powerful Streamlit application designed to facilitate interactive conversations with text extracted from various document formats, including PDF, Word, PowerPoint, and Excel. It seamlessly integrates with OpenAI's AI models, allowing users to derive insights and interact directly through a user-friendly interface.
+A Streamlit retrieval prototype for asking questions about PDF, DOCX, PPTX, and XLSX files.
 
-## Key Features
-- **Multi-Source Document Input:** Users can upload multiple files simultaneously, enabling a comprehensive review and interaction with diverse data sources.
-- **AI-Driven Interactions:** The app leverages OpenAI's technology to process and respond to user inquiries based on the content of the uploaded documents.
-- **User-Friendly Interface:** Designed with Streamlit, the interface is intuitive, making document uploads and interactions straightforward and effective.
-- **Scalability:** Prepared to handle additional AI models or document types as the need arises.
+> Status: prototype. The application is suitable for local exploration, not for confidential documents or production deployment.
 
-## Getting Started
-To use this application, follow these steps:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/anishmahapatra/MultiDocument-AI.git
+## What it demonstrates
 
-2.	Navigate to the project directory and install the required dependencies:
-    ```bash
-    cd MultiDocument-AI
-    pip install -r requirements.txt
+- Text extraction across four common document formats
+- Character-based chunking
+- OpenAI embeddings
+- In-memory FAISS retrieval
+- LangChain conversational retrieval
+- Streamlit file upload and chat history
+- User-supplied API credentials through the interface
 
-3.	Run the application:
-    ```bash
-    streamlit run app.py
+## Flow
 
-![alt text](image.png)
+```mermaid
+flowchart LR
+    A[Uploaded document] --> B[Format-specific text extraction]
+    B --> C[Text chunks]
+    C --> D[OpenAI embeddings]
+    D --> E[FAISS index]
+    E --> F[Conversational retrieval chain]
+    F --> G[Streamlit answer and chat history]
+```
 
-Developed by [Anish Mahapatra](https://www.linkedin.com/in/anishmahapatra/)
+## Supported formats
+
+| Format | Reader |
+| --- | --- |
+| PDF | PyPDF2 |
+| DOCX | python-docx |
+| PPTX | python-pptx |
+| XLSX | pandas and openpyxl |
+
+## Local setup
+
+```bash
+git clone https://github.com/anishmahapatra/MultiDocument-AI.git
+cd MultiDocument-AI
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+Open the local Streamlit URL, enter an OpenAI API key in the sidebar, upload a supported document, and submit a question.
+
+## Repository layout
+
+```text
+app.py             Streamlit interface and session flow
+functions.py       Extraction, chunking, retrieval, and conversation helpers
+htmlTemplates.py   Retained interface templates
+Flowchart.png      Original architecture illustration
+Showcase/          Screenshots and demo assets
+archive/           Earlier implementation material
+```
+
+## Current behavior
+
+- Each uploaded file is processed independently.
+- When several files are uploaded, the final processed file becomes the active conversation chain.
+- Chat history is stored in the Streamlit session.
+- The FAISS index is created in process and is not persisted by the application.
+- The interface returns answers without structured source citations.
+
+## Security and privacy
+
+Uploaded content and text chunks are sent to OpenAI for embedding and answer generation. Do not use confidential or regulated documents without reviewing provider policies and adding suitable controls.
+
+A production version should add:
+
+- Authentication and per-user isolation
+- File size and type validation
+- Malware scanning
+- Explicit retention and deletion behavior
+- Secret management outside the page
+- Source citations and retrieval diagnostics
+- Request limits, audit logs, and tests
+
+## Known limitations
+
+- The LangChain imports use an older package layout and should be upgraded before further development.
+- There are no automated tests.
+- Error handling is minimal.
+- Multi-file retrieval is not implemented as a combined index.
+- Model choice, chunking, and retrieval parameters are fixed in code.
